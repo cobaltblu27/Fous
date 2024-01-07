@@ -1,13 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
+using Codes.Utils;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using MathUtils = Codes.Utils.MathUtils;
 
 public class MenuController : MonoBehaviour
 {

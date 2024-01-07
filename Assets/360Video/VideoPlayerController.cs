@@ -7,11 +7,12 @@ public class VideoPlayerController : MonoBehaviour
 {
     public VideoPlayer videoPlayer;
     public float skipTime;
-
+    public GazeLogger gazeLogger;
 
     private InputAction pauseAction;
     private InputAction rewindAction;
     private InputAction forwardAction;
+    private InputAction stopAction;
 
     public InputActionProperty someButtonAction; // primary button
 
@@ -35,6 +36,9 @@ public class VideoPlayerController : MonoBehaviour
         forwardAction.Enable();
         forwardAction.performed += context => ForwardVideo(skipTime); // 이후 5초 이동
 
+        stopAction = new InputAction(binding: "<Keyboard>/enter", type: InputActionType.Button, interactions: "press");
+        stopAction.Enable();
+        stopAction.performed += context => StopVideo();
     }
 
     private void OnDisable()
@@ -53,12 +57,20 @@ public class VideoPlayerController : MonoBehaviour
             if (videoPlayer.isPlaying)
             {
                 videoPlayer.Pause(); // 영상 일시 정지
+                gazeLogger.PauseLogging();
             }
             else
             {
                 videoPlayer.Play(); // 영상 재생
+                gazeLogger.StartLogging();
             }
         }
+    }
+
+    void StopVideo()
+    {
+        videoPlayer.Stop();
+        gazeLogger.StopLogging();
     }
 
     // skipTime 전으로 이동
